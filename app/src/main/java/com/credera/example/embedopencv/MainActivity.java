@@ -1,37 +1,16 @@
 package com.credera.example.embedopencv;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import org.opencv.android.OpenCVLoader;
-import org.opencv.core.*;
-import org.opencv.core.Core.*;
-import org.opencv.features2d.FeatureDetector;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.*;
-import org.opencv.objdetect.*;
-
-import java.lang.ref.WeakReference;
-
-import butterknife.internal.DebouncingOnClickListener;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -40,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "MainActivity";
     private ImageView uploadedImage;
     private int imageMaxHeight;
-    private Button uploadImageButton, convertImg;
+    private Button uploadImageButton;
 
     static {
         if (!OpenCVLoader.initDebug()){
@@ -58,10 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         uploadedImage = (ImageView) findViewById(R.id.imageToUpload);
         imageMaxHeight = uploadedImage.getHeight();
         uploadImageButton = (Button) findViewById(R.id.uploadImageButton);
-        convertImg = (Button) findViewById(R.id.convertPicture);
 
         uploadImageButton.setOnClickListener(this);
-        convertImg.setOnClickListener(this);
     }
 
     @Override
@@ -70,10 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.uploadImageButton:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
-                break;
-
-            case R.id.convertPicture:
-                uploadedImage.setImageBitmap(HighlighterProcessing.findHighlightedWords(uploadedImage));
         }
     }
 
