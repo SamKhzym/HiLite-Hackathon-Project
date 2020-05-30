@@ -22,10 +22,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import org.opencv.android.OpenCVLoader;
-import org.opencv.android.Utils;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
+import org.opencv.core.*;
+import org.opencv.core.Core.*;
+import org.opencv.features2d.FeatureDetector;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.*;
+import org.opencv.objdetect.*;
 
 import java.lang.ref.WeakReference;
 
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "MainActivity";
     private ImageView uploadedImage;
     private int imageMaxHeight;
-    private Button uploadImageButton;
+    private Button uploadImageButton, convertImg;
 
     static {
         if (!OpenCVLoader.initDebug()){
@@ -56,8 +58,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         uploadedImage = (ImageView) findViewById(R.id.imageToUpload);
         imageMaxHeight = uploadedImage.getHeight();
         uploadImageButton = (Button) findViewById(R.id.uploadImageButton);
+        convertImg = (Button) findViewById(R.id.convertPicture);
 
         uploadImageButton.setOnClickListener(this);
+        convertImg.setOnClickListener(this);
     }
 
     @Override
@@ -66,6 +70,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.uploadImageButton:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+                break;
+
+            case R.id.convertPicture:
+                uploadedImage.setImageBitmap(HighlighterProcessing.findHighlightedWords(uploadedImage));
         }
     }
 

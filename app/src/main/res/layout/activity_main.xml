@@ -12,7 +12,7 @@
         <ImageView
             android:id="@+id/imageToUpload"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="650dp"
             android:layout_gravity="center"
             app:srcCompat="@drawable/default_image" />
 
@@ -22,6 +22,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="UPLOAD A PICTURE" />
+
+        <Button
+            android:id="@+id/convertPicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="CONVERT YOUR PICTURE" />
 
     </LinearLayout>
 
