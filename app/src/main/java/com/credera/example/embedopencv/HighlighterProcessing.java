@@ -28,7 +28,6 @@ public class HighlighterProcessing {
     public static Bitmap findHighlightedWords(ImageView img) {
 
         process(imageviewToMat(img));
-
         return matToBitmap(maskOutput);
 
     }
