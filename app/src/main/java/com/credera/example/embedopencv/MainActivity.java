@@ -1,6 +1,7 @@
 package com.credera.example.embedopencv;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.convertPicture:
                 displayHighlightedTexts();
+                Log.d("button","press convert");
 
         }
     }
@@ -92,8 +94,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ImageView newImg = new ImageView(this);
             newImg.setImageBitmap(highlightedTexts.get(i));
             layout.addView(newImg);
+            Intent a = new Intent(this,Display_Higlighted_Words.class);
+            startActivity(a);
         }
-
     }
 
     /*private ImageView imageView;
