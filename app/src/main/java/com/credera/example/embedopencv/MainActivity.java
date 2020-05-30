@@ -9,23 +9,39 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import org.opencv.android.OpenCVLoader;
+
+import org.opencv.core.*;
+import org.opencv.core.Core.*;
+import org.opencv.features2d.FeatureDetector;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.*;
+import org.opencv.objdetect.*;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Random;
+
+import butterknife.internal.DebouncingOnClickListener;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int RESULT_LOAD_IMAGE = 1;
 
-    private static final String TAG = "MainActivity";
+    private LinearLayout layout;
     private ImageView uploadedImage;
     private int imageMaxHeight;
     private Button uploadImageButton;
 
+    private ArrayList<Bitmap> highlightedTexts = new ArrayList<Bitmap>();
+
     static {
         if (!OpenCVLoader.initDebug()){
-            Log.d(TAG, "Failed to load OpenCV :(");
+            Log.d("TEST", "Failed to load OpenCV :(");
         } else {
-            Log.d(TAG, "Loaded OpenCV :)");
+            Log.d("TEST", "Loaded OpenCV :)");
         }
     }
 
@@ -34,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        layout = (LinearLayout) findViewById(R.id.layout);
         uploadedImage = (ImageView) findViewById(R.id.imageToUpload);
         imageMaxHeight = uploadedImage.getHeight();
         uploadImageButton = (Button) findViewById(R.id.uploadImageButton);
@@ -47,6 +64,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.uploadImageButton:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+                break;
+
+            case R.id.convertPicture:
+                displayHighlightedTexts();
+
         }
     }
 
@@ -60,6 +82,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             //FIGURE OUT HOW TO RESIZE IMAGE AND NOT EAT THE BUTTON HERE
 
         }
+    }
+
+    private void displayHighlightedTexts() {
+
+        highlightedTexts = HighlighterProcessing.findHighlightedWords(uploadedImage);
+
+        for (int i = 0; i < highlightedTexts.size(); i++) {
+            ImageView newImg = new ImageView(this);
+            newImg.setImageBitmap(highlightedTexts.get(i));
+            layout.addView(newImg);
+        }
+
     }
 
     /*private ImageView imageView;
