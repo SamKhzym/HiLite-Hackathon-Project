@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import android.hardware.camera2.*;
+
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
         fab.setOnClickListener(fabClickListener);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -209,3 +212,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+
