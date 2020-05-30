@@ -1,28 +1,18 @@
 package com.credera.example.embedopencv;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import org.opencv.android.OpenCVLoader;
+
 import org.opencv.core.*;
 import org.opencv.core.Core.*;
 import org.opencv.features2d.FeatureDetector;
@@ -43,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout layout;
     private ImageView uploadedImage;
     private int imageMaxHeight;
-    private Button uploadImageButton, convertImg;
+    private Button uploadImageButton;
 
     private ArrayList<Bitmap> highlightedTexts = new ArrayList<Bitmap>();
 
@@ -64,10 +54,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         uploadedImage = (ImageView) findViewById(R.id.imageToUpload);
         imageMaxHeight = uploadedImage.getHeight();
         uploadImageButton = (Button) findViewById(R.id.uploadImageButton);
-        convertImg = (Button) findViewById(R.id.convertPicture);
 
         uploadImageButton.setOnClickListener(this);
-        convertImg.setOnClickListener(this);
     }
 
     @Override
@@ -80,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.convertPicture:
                 displayHighlightedTexts();
+
         }
     }
 
