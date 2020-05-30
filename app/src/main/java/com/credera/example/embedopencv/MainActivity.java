@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout layout;
     private ImageView uploadedImage;
     private int imageMaxHeight;
-    private Button uploadImageButton;
+    private Button uploadImageButton, convertImageButton;
 
     private ArrayList<Bitmap> highlightedTexts = new ArrayList<Bitmap>();
 
@@ -55,8 +55,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         uploadedImage = (ImageView) findViewById(R.id.imageToUpload);
         imageMaxHeight = uploadedImage.getHeight();
         uploadImageButton = (Button) findViewById(R.id.uploadImageButton);
+        convertImageButton = (Button) findViewById(R.id.convertPicture);
 
         uploadImageButton.setOnClickListener(this);
+        convertImageButton.setOnClickListener(this);
     }
 
     @Override
