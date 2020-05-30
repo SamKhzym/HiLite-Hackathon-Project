@@ -1,9 +1,12 @@
 package com.credera.example.embedopencv;
+import android.widget.Toast;
+
 import java.io.*;
 
 public class ArrayToCsv {
 
-    public static String toCSV(String[] array) throws IOException{
+
+    public static void toCSV(String[] array) throws IOException{
         String result = "";
         if (array.length > 0) {
             StringBuilder sb = new StringBuilder();
@@ -12,16 +15,15 @@ public class ArrayToCsv {
             }
             result = sb.deleteCharAt(sb.length() - 1).toString();
         }
-        FileWriter out = null;
+        FileOutputStream out = null;
 
         try {
-            out = new FileWriter("output.txt");
-            out.write(result);
+            out = new FileOutputStream("output.txt");
+            out.write(result.getBytes());
             } finally {
             if (out != null) {
                 out.close();
             }
         }
-        return "";
     }
 }

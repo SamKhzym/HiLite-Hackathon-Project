@@ -17,17 +17,25 @@
             android:contentDescription="@string/image"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/default_image" />
+
         <Button
             android:id="@+id/uploadImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/upload_a_picture" />
+
         <Button
             android:id="@+id/convertPicture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/convert_your_picture" />
+        <Button
+            android:id="@+id/testButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/testfile" />
     </LinearLayout>
 </ScrollView>

@@ -9,8 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import org.opencv.android.OpenCVLoader;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -20,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView uploadedImage;
     private int imageMaxHeight;
     private Button uploadImageButton;
-
+    String[] test = {"1","1","1","2","3"};
     static {
         if (!OpenCVLoader.initDebug()){
             Log.d(TAG, "Failed to load OpenCV :(");
@@ -47,8 +50,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.uploadImageButton:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+            case R.id.testButton:
+                try {
+                    ArrayToCsv.toCSV(test);
+                    Toast.makeText(this,"saved to "+ getFilesDir()+"/"+"output.txt",Toast.LENGTH_LONG).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         }
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
