@@ -46,24 +46,4 @@ public class ArrayToCsv {
 
     }
 
-//        FileOutputStream fos = null;
-//        try {
-//            fos = ctx.openFileOutput(FILE_NAME, MODE_PRIVATE);
-//            fos.write(str.getBytes());
-//
-//            Log.d("TEST", ("Saved to " + ctx.getFilesDir() + "/" + FILE_NAME));
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } finally {
-//            if (fos != null) {
-//                try {
-//                    fos.close();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-
 }
