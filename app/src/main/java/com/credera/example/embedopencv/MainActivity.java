@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import butterknife.internal.DebouncingOnClickListener;
+import com.google.android.gms.vision.text.Text;
+import com.google.android.gms.vision.text.TextBlock;
+import com.google.android.gms.vision.text.TextRecognizer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -35,8 +38,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView uploadedImage;
     private int imageMaxHeight;
     private Button uploadImageButton, convertImageButton;
+    private TextRecognizer recognizer;
 
     private ArrayList<Bitmap> highlightedTexts = new ArrayList<Bitmap>();
+    private ArrayList<String> recognizedText = new ArrayList<String>();
+
+    //andy is bad
 
     static {
         if (!OpenCVLoader.initDebug()){
@@ -59,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         uploadImageButton.setOnClickListener(this);
         convertImageButton.setOnClickListener(this);
+
+        recognizer = new TextRecognizer.Builder(MainActivity.this).build();
     }
 
     @Override
@@ -73,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.convertPicture:
                 displayHighlightedTexts();
                 Log.d("button","press convert");
-
+                getTextFromBitmaps();
         }
     }
 
@@ -100,6 +109,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
          //Intent a = new Intent(this,Display_Higlighted_Words.class); // swap screens
          //startActivity(a);
+    }
+
+    private void getTextFromBitmaps() {
+
+        for (int i = 0; i < highlightedTexts.size(); i++) {
+            String str = RecognizeText.extractTextFromImage(recognizer, highlightedTexts.get(i));
+            recognizedText.add(str);
+            Log.d("TESTING RECOGNITION", str);
+        }
+
     }
 
     /*private ImageView imageView;
