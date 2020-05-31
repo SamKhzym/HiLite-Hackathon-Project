@@ -45,7 +45,7 @@
             app:end="255"
             app:maxDistance="255"
             app:minDistance="0"
-            app:tickColor="#00FFFFFF"></me.bendik.simplerangeview.SimpleRangeView>
+            app:tickColor="#00FFFFFF" />
 
         <Button
             android:id="@+id/convertPicture"
