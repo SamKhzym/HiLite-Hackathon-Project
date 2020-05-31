@@ -11,15 +11,6 @@
         android:layout_gravity="top"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageToUpload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:contentDescription="@string/image"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/default_image" />
-
         <Button
             android:id="@+id/uploadImageButton"
             android:layout_width="wrap_content"
@@ -30,6 +21,15 @@
             android:text="@string/upload_a_picture"
             android:textAllCaps="false"
             android:textIsSelectable="false" />
+
+        <ImageView
+            android:id="@+id/imageToUpload"
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/image"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/default_image" />
 
         <me.bendik.simplerangeview.SimpleRangeView
             android:id="@+id/rang_bar"
