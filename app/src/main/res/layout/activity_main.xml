@@ -8,13 +8,13 @@
         android:id="@+id/masterLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="top"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imageToUpload"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="400dp"
             android:layout_gravity="center"
             android:contentDescription="@string/image"
             android:scaleType="fitCenter"
@@ -38,6 +38,7 @@
             android:longClickable="false"
             android:max="255"
             android:scrollbarSize="4dp"
+            android:visibility="invisible"
             app:activeFocusThumbColor="#FFFFFF"
             app:activeLineColor="@color/colorPrimaryDark"
             app:activeThumbColor="@color/colorPrimary"
@@ -53,6 +54,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/convert_your_picture" />
+
+        <Button
+            android:id="@+id/exportCSV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="EXPORT CSV"
+            android:visibility="invisible" />
 
     </LinearLayout>
 </ScrollView>
