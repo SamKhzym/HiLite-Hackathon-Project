@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ArrayList<Bitmap> highlightedTexts = new ArrayList<Bitmap>();
     private ArrayList<String> recognizedText = new ArrayList<String>();
 
+    //andy is bad
+
     static {
         if (!OpenCVLoader.initDebug()){
             Log.d("TEST", "Failed to load OpenCV :(");
