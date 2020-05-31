@@ -14,7 +14,7 @@
         <ImageView
             android:id="@+id/imageToUpload"
             android:layout_width="wrap_content"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:contentDescription="@string/image"
             android:scaleType="fitCenter"
@@ -54,14 +54,70 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/convert_your_picture" />
+        <RadioGroup
+            android:id="@+id/rg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="15dp">
 
-        <EditText
+            <RadioButton
+                android:id="@+id/blueO"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#3F51B5"
+                android:onClick="radButtons"/>
+
+            <RadioButton
+                android:id="@+id/orangeO"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#FF5722"
+                android:onClick="radButtons"/>
+
+            <RadioButton
+                android:id="@+id/greenO"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#FF4CAF50"
+                android:onClick="radButtons"/>
+
+            <RadioButton
+                android:id="@+id/pinkO"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#FFE91E63"
+                android:textColorLink="#E91E63"
+                android:onClick="radButtons"/>
+
+            <RadioButton
+                android:id="@+id/yellowO"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#FFFFEB3B"
+                android:textColorLink="#FFEB3B"
+                android:onClick="radButtons"/>
+
+            <RadioButton
+                android:id="@+id/sliderbut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:buttonTint="#000000"
+                android:gravity="bottom"
+                android:text="Slider"
+                android:onClick="radButtons"/>
+
+        </RadioGroup>
+       <EditText
             android:id="@+id/sendTo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Enter Email of recipient"
             android:visibility="invisible"/>
-
+           />
         <Button
             android:id="@+id/exportCSV"
             android:layout_width="wrap_content"
@@ -69,6 +125,5 @@
             android:layout_gravity="center"
             android:text="EXPORT CSV"
             android:visibility="invisible"/>
-
     </LinearLayout>
 </ScrollView>
