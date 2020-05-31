@@ -24,11 +24,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/upload_a_picture" />
+
+        <me.bendik.simplerangeview.SimpleRangeView
+            android:id="@+id/rang_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="255"></me.bendik.simplerangeview.SimpleRangeView>
         <Button
             android:id="@+id/convertPicture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/convert_your_picture" />
+
     </LinearLayout>
 </ScrollView>

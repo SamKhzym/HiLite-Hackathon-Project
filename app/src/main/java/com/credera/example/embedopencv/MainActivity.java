@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.opencv.android.OpenCVLoader;
 
 import org.opencv.core.*;
@@ -26,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import butterknife.internal.DebouncingOnClickListener;
+import me.bendik.simplerangeview.SimpleRangeView;
+
 import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int imageMaxHeight;
     private Button uploadImageButton, convertImageButton;
     private TextRecognizer recognizer;
+    SimpleRangeView rangeBar;
 
     private ArrayList<Bitmap> highlightedTexts = new ArrayList<Bitmap>();
     private ArrayList<String> recognizedText = new ArrayList<String>();
@@ -68,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         convertImageButton.setOnClickListener(this);
 
         recognizer = new TextRecognizer.Builder(MainActivity.this).build();
+
     }
 
     @Override
@@ -120,6 +126,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
+    private void slider(){
+        rangeBar = findViewById(R.id.rang_bar);
+        rangeBar.setOnChangeRangeListener(new SimpleRangeView.OnChangeRangeListener() {
+            @Override
+            public void onRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i, int i1) {
+
+            }
+        });
+        rangeBar.setOnChangeRangeListener(new SimpleRangeView.OnChangeRangeListener() {
+            @Override
+            public void onRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i, int i1) {
+
+            }
+        });
+        rangeBar.setOnRangeLabelsListener(new SimpleRangeView.OnRangeLabelsListener() {
+            @Nullable
+            @Override
+            public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull SimpleRangeView.State state) {
+                return String.valueOf(i);
+            }
+        });
+    }
+
 
     /*private ImageView imageView;
     private Bitmap processedBitmap;
