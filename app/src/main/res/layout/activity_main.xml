@@ -59,7 +59,8 @@
             android:id="@+id/sendTo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Enter Email of recipient"/>
+            android:hint="Enter Email of recipient"
+            android:visibility="invisible"/>
 
         <Button
             android:id="@+id/exportCSV"
@@ -67,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="EXPORT CSV"
-            android:visibility="invisible" />
+            android:visibility="invisible"/>
 
     </LinearLayout>
 </ScrollView>

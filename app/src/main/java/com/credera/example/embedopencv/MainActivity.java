@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void displayAllHighlights() {
 
         exportCSVBtn.setVisibility(View.VISIBLE);
+        emailRecipient.setVisibility(View.VISIBLE);
 
         for (int i = 0; i < highlightedTexts.size(); i++) {
 
