@@ -261,7 +261,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         return super.onOptionsItemSelected(item);
     }
-
+// cock
     public static Bitmap decodeSampledBitmapFromResource(Resources res,
                                                          int resId,
                                                          int reqWidth,
