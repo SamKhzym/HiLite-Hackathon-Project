@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.convertPicture:
                 displayHighlightedTexts();
                 Log.d("button","press convert");
+                setContentView(R.layout.display_highlighted_words);
                 getTextFromBitmaps();
         }
     }
@@ -107,8 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             layout.addView(newImg);
 
         }
-         //Intent a = new Intent(this,Display_Higlighted_Words.class); // swap screens
-         //startActivity(a);
+
     }
 
     private void getTextFromBitmaps() {
