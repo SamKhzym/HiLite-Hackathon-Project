@@ -2,13 +2,17 @@ package com.credera.example.embedopencv;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -26,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import butterknife.internal.DebouncingOnClickListener;
+
+import com.google.android.gms.vision.text.Line;
 import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
@@ -34,14 +40,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final int RESULT_LOAD_IMAGE = 1;
 
-    private LinearLayout layout;
+    private LinearLayout masterLayout;
     private ImageView uploadedImage;
-    private int imageMaxHeight;
     private Button uploadImageButton, convertImageButton;
     private TextRecognizer recognizer;
 
     private ArrayList<Bitmap> highlightedTexts = new ArrayList<Bitmap>();
     private ArrayList<String> recognizedText = new ArrayList<String>();
+    private ArrayList<LinearLayout> layouts = new ArrayList<LinearLayout>();
 
     //andy is bad
 
@@ -58,9 +64,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        layout = (LinearLayout) findViewById(R.id.layout);
+        masterLayout = (LinearLayout) findViewById(R.id.masterLayout);
         uploadedImage = (ImageView) findViewById(R.id.imageToUpload);
-        imageMaxHeight = uploadedImage.getHeight();
         uploadImageButton = (Button) findViewById(R.id.uploadImageButton);
         convertImageButton = (Button) findViewById(R.id.convertPicture);
 
@@ -80,9 +85,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.convertPicture:
-                displayHighlightedTexts();
-                Log.d("button","press convert");
+                findHighlightedTexts();
                 getTextFromBitmaps();
+                displayAllHighlights();
+
         }
     }
 
@@ -97,18 +103,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void displayHighlightedTexts() {
-
+    private void findHighlightedTexts() {
         highlightedTexts = HighlighterProcessing.findHighlightedWords(uploadedImage);// opencv colour filter
-
-        for (int i = 0; i < highlightedTexts.size(); i++) {
-            ImageView newImg = new ImageView(this);
-            newImg.setImageBitmap(highlightedTexts.get(i));
-            layout.addView(newImg);
-
-        }
-         //Intent a = new Intent(this,Display_Higlighted_Words.class); // swap screens
-         //startActivity(a);
     }
 
     private void getTextFromBitmaps() {
@@ -119,6 +115,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d("TESTING RECOGNITION", str);
         }
 
+    }
+
+    private void displayAllHighlights() {
+
+        for (int i = 0; i < highlightedTexts.size(); i++) {
+
+            LinearLayout newLayout = new LinearLayout(this);
+            newLayout.setGravity(Gravity.CENTER);
+            newLayout.setPadding(10, 10, 10, 10);
+
+            ImageView newImg = new ImageView(this);
+            newImg.setLayoutParams(new FrameLayout.LayoutParams(700, 100));
+            newImg.setImageBitmap(highlightedTexts.get(i));
+
+            Button btn = new Button(this);
+            btn.setBackgroundColor(Color.RED);
+            btn.setLayoutParams(new FrameLayout.LayoutParams(100, 100));
+            btn.setText("X");
+            btn.setPadding(10, 10, 10, 10);
+
+            final int j = i;
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    highlightedTexts.remove(j);
+                    masterLayout.removeView(layouts.get(j));
+                }
+            });
+
+            ImageView buffer = new ImageView(this);
+            buffer.setLayoutParams(new FrameLayout.LayoutParams(30, 100));
+
+            newLayout.addView(newImg);
+            newLayout.addView(buffer);
+            newLayout.addView(btn);
+
+            layouts.add(newLayout);
+
+            masterLayout.addView(newLayout);
+
+        }
     }
 
     /*private ImageView imageView;
