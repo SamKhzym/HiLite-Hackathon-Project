@@ -1,6 +1,7 @@
 package com.credera.example.embedopencv;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button uploadImageButton, convertImageButton, exportCSVBtn;
     private TextRecognizer recognizer;
     SimpleRangeView rangeBar;
+    private RadioButton yellowO,blueO,orangeO,greenO,pinkO,sliderBut;
+    boolean[] radBut = new boolean[6];
 
     private ArrayList<Bitmap> highlightedTexts = new ArrayList<Bitmap>();
     private ArrayList<String> recognizedText = new ArrayList<String>();
@@ -73,6 +77,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         uploadImageButton = (Button) findViewById(R.id.uploadImageButton);
         convertImageButton = (Button) findViewById(R.id.convertPicture);
         exportCSVBtn = (Button) findViewById(R.id.exportCSV);
+        yellowO = (RadioButton) findViewById((R.id.yellowO));
+        blueO = (RadioButton) findViewById((R.id.blueO));
+        orangeO = (RadioButton) findViewById((R.id.orangeO));
+        greenO = (RadioButton) findViewById((R.id.greenO));
+        pinkO = (RadioButton) findViewById((R.id.pinkO));
+        sliderBut= (RadioButton) findViewById(R.id.sliderbut);
+
 
         uploadImageButton.setOnClickListener(this);
         convertImageButton.setOnClickListener(this);
@@ -95,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 findHighlightedTexts();
                 Log.d("button", "press convert");
                 displayAllHighlights();
+
                 break;
 
             case R.id.exportCSV:
@@ -117,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void findHighlightedTexts() {
-        highlightedTexts = HighlighterProcessing.findHighlightedWords(uploadedImage);// opencv colour filter
+        highlightedTexts = HighlighterProcessing.findHighlightedWords(uploadedImage,colourMaker());// opencv colour filter
 
     }
 
@@ -201,7 +213,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         return a;
+
     }
+    public void radButtons(View view) {
+        radBut[0] = blueO.isChecked();
+        radBut[1] = orangeO.isChecked();
+        radBut[2] = greenO.isChecked();
+        radBut[3] = pinkO.isChecked();
+        radBut[4] = yellowO.isChecked();
+        radBut[5] = sliderBut.isChecked();
+        if(radBut[5]){
+            rangeBar.setVisibility(View.VISIBLE);
+        }
+        else {rangeBar.setVisibility(View.INVISIBLE);}
+
+    }
+    private double[]colourMaker(){
+        if(radBut[0]){return new double[]{79,112}; }
+        if(radBut[1]){return new double[]{10,23}; }
+        if(radBut[2]){return new double[]{50,71}; }
+        if(radBut[3]){return new double[]{141,168}; }
+        if(radBut[4]){return new double[]{28,40}; }
+        if(radBut[6]){Slider();}
+        return null;
+    }
+
+
 
     /*private ImageView imageView;
     private Bitmap processedBitmap;
@@ -269,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         return super.onOptionsItemSelected(item);
     }
-
+// cock
     public static Bitmap decodeSampledBitmapFromResource(Resources res,
                                                          int resId,
                                                          int reqWidth,
