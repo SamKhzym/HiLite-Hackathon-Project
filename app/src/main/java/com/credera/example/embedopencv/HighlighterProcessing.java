@@ -85,13 +85,8 @@ public class HighlighterProcessing {
         // Step Blur0:
         Mat blur0Input = source0;
         BlurType blur0Type = BlurType.get("Box Blur");
-        double blur0Radius = 12;
+        double blur0Radius = 4;
         blur(blur0Input, blur0Type, blur0Radius, blur0Output);
-
-        // Step Mask0:
-        Mat maskInput = source0;
-        Mat maskMask = hsvThresholdOutput;
-        mask(maskInput, maskMask, maskOutput);
 
         // Step HSV_Threshold0:
         Mat hsvThresholdInput = blur0Output;
@@ -114,7 +109,7 @@ public class HighlighterProcessing {
 
         // Step Filter_Contours0:
         ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
-        double filterContoursMinArea = 300.0;
+        double filterContoursMinArea = 500;
         double filterContoursMinPerimeter = 0;
         double filterContoursMinWidth = 0;
         double filterContoursMaxWidth = 1.0E7;
