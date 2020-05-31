@@ -12,12 +12,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.opencv.android.OpenCVLoader;
@@ -32,9 +29,7 @@ import org.opencv.objdetect.*;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Random;
-import me.bendik.simplerangeview.SimpleRangeView;
 
-import com.google.android.gms.vision.text.Line;
 import butterknife.internal.DebouncingOnClickListener;
 import me.bendik.simplerangeview.SimpleRangeView;
 
@@ -49,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout masterLayout;
     private ImageView uploadedImage;
     private int imageMaxHeight;
-    private Button uploadImageButton, convertImageButton;
+    private Button uploadImageButton, convertImageButton, exportCSVBtn;
     private TextRecognizer recognizer;
     SimpleRangeView rangeBar;
 
@@ -58,10 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static double[] hueFilter;
     private ArrayList<LinearLayout> layouts = new ArrayList<LinearLayout>();
 
-    //andy is bad
-
     static {
-        if (!OpenCVLoader.initDebug()){
+        if (!OpenCVLoader.initDebug()) {
             Log.d("TEST", "Failed to load OpenCV :(");
         } else {
             Log.d("TEST", "Loaded OpenCV :)");
@@ -78,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imageMaxHeight = uploadedImage.getHeight();
         uploadImageButton = (Button) findViewById(R.id.uploadImageButton);
         convertImageButton = (Button) findViewById(R.id.convertPicture);
+        exportCSVBtn = (Button) findViewById(R.id.exportCSV);
 
         uploadImageButton.setOnClickListener(this);
         convertImageButton.setOnClickListener(this);
@@ -115,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void findHighlightedTexts() {
         highlightedTexts = HighlighterProcessing.findHighlightedWords(uploadedImage);// opencv colour filter
+
     }
 
     private void getTextFromBitmaps() {
@@ -167,6 +162,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void exportCSV() {
+
+    }
+
     private double[] Slider() {
         final double[] a = {0, 0};
 
@@ -192,8 +191,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         return a;
     }
-
-
 
     /*private ImageView imageView;
     private Bitmap processedBitmap;
