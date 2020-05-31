@@ -31,9 +31,10 @@ public class HighlighterProcessing {
     private static ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
     private static ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
     private static ArrayList<Mat> highlightedTextRectangles = new ArrayList<Mat>();
+    private  static double[] higlightercolour = new double[2];
 
-    public static ArrayList<Bitmap> findHighlightedWords(ImageView img) {
-
+    public static ArrayList<Bitmap> findHighlightedWords(ImageView img,double[] hColour) {
+        higlightercolour = hColour;
         source = imageviewToMat(img);
         process(source);
 
@@ -95,7 +96,7 @@ public class HighlighterProcessing {
         // Step HSV_Threshold0:
         Mat hsvThresholdInput = blur0Output;
 
-        double[] hsvThresholdHue = {3, 16};
+        double[] hsvThresholdHue = higlightercolour;
         double[] hsvThresholdSaturation = {29.81115107913669, 255.0};
         double[] hsvThresholdValue = {0.0, 255.0};
         hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);

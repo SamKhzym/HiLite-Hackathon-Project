@@ -65,35 +65,52 @@
             android:padding="15dp">
 
             <RadioButton
-                android:id="@+id/orangeO"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColorHighlight="#D0FFEB3B"
-                android:textColorLink="#FFEB3B" />
-
-            <RadioButton
                 android:id="@+id/blueO"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColorLink="#3F51B5" />
+                android:buttonTint="#3F51B5"
+                android:onClick="radButtons"/>
+
+            <RadioButton
+                android:id="@+id/orangeO"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#FF5722"
+                android:onClick="radButtons"/>
 
             <RadioButton
                 android:id="@+id/greenO"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColorLink="#FF5722" />
+                android:buttonTint="#FF4CAF50"
+                android:onClick="radButtons"/>
 
             <RadioButton
                 android:id="@+id/pinkO"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColorLink="#4CAF50" />
+                android:buttonTint="#FFE91E63"
+                android:textColorLink="#E91E63"
+                android:onClick="radButtons"/>
 
             <RadioButton
                 android:id="@+id/yellowO"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColorLink="#E91E63" />
+                android:buttonTint="#FFFFEB3B"
+                android:textColorLink="#FFEB3B"
+                android:onClick="radButtons"/>
+
+            <RadioButton
+                android:id="@+id/sliderbut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:buttonTint="#000000"
+                android:gravity="bottom"
+                android:text="Slider"
+                android:onClick="radButtons"/>
+
         </RadioGroup>
 
             />
