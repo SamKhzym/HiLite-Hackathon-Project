@@ -54,6 +54,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/convert_your_picture" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Pick Highlighter colour"
+            android:textAlignment="center"
+            android:textColor="#000000" />
+
         <RadioGroup
             android:id="@+id/rg"
             android:layout_width="match_parent"
@@ -111,7 +121,8 @@
                 android:onClick="radButtons"/>
 
         </RadioGroup>
-       <EditText
+
+        <EditText
             android:id="@+id/sendTo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
