@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button uploadImageButton, convertImageButton, exportCSVBtn;
     private TextRecognizer recognizer;
     SimpleRangeView rangeBar;
+    private RadioButton yellowO,blueO,orangeO,greenO,pinkO;
 
     private ArrayList<Bitmap> highlightedTexts = new ArrayList<Bitmap>();
     private ArrayList<String> recognizedText = new ArrayList<String>();
@@ -72,6 +74,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         uploadImageButton = (Button) findViewById(R.id.uploadImageButton);
         convertImageButton = (Button) findViewById(R.id.convertPicture);
         exportCSVBtn = (Button) findViewById(R.id.exportCSV);
+        yellowO = (RadioButton) findViewById((R.id.yellowO));
+        blueO = (RadioButton) findViewById((R.id.blueO));
+        orangeO = (RadioButton) findViewById((R.id.orangeO));
+        greenO = (RadioButton) findViewById((R.id.greenO));
+        pinkO = (RadioButton) findViewById((R.id.pinkO));
 
         uploadImageButton.setOnClickListener(this);
         convertImageButton.setOnClickListener(this);
@@ -92,7 +99,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.convertPicture:
                 findHighlightedTexts();
                 Log.d("button", "press convert");
+                displayAllHighlights();
+                break;
+
+            case R.id.exportCSV:
                 getTextFromBitmaps();
+                try {
+                    exportCSV();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         }
     }
 
@@ -104,6 +120,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             uploadedImage.setImageURI(selectedImage);
 
             //FIGURE OUT HOW TO RESIZE IMAGE AND NOT EAT THE BUTTON HERE
+        }
+    }
+
+    public void onRadioButtonClicked(View v) {
+
+        boolean checked = ((RadioButton) v).isChecked();
+
+        yellowO.setTextColor(Color.GRAY);
+        blueO.setTextColor(Color.GRAY);
+        orangeO.setTextColor(Color.GRAY);
+        greenO.setTextColor(Color.GRAY);
+        pinkO.setTextColor(Color.GRAY);
+        switch (v.getId()) {
+            case R.id.yellowO:
+                if (checked)
+                    yellowO.setTextColor(Color.YELLOW);
+                break;
+            case R.id.blueO:
+                if (checked)
+                    blueO.setTextColor(Color.BLUE);
+                break;
+            case R.id.orangeO:
+                if (checked)
+                    blueO.setTextColor(Color.RED);
+                break;
+            case R.id.greenO:
+                if (checked)
+                    blueO.setTextColor(Color.GREEN);
+                break;
+            case R.id.pinkO:
+                if (checked)
+                    blueO.setTextColor(Color.RED);
+                break;
         }
     }
 
@@ -191,6 +240,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         return a;
     }
+
 
     /*private ImageView imageView;
     private Bitmap processedBitmap;

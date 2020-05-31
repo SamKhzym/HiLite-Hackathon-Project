@@ -1,5 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF">
@@ -9,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="ExtraText">
 
 
         <ImageView
@@ -67,27 +69,33 @@
             <RadioButton
                 android:id="@+id/orangeO"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColorHighlight="#D0FFEB3B"
+                android:textColorLink="#FFEB3B" />
 
             <RadioButton
                 android:id="@+id/blueO"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColorLink="#3F51B5" />
 
             <RadioButton
                 android:id="@+id/greenO"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColorLink="#FF5722" />
 
             <RadioButton
                 android:id="@+id/pinkO"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColorLink="#4CAF50" />
 
             <RadioButton
                 android:id="@+id/yellowO"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColorLink="#E91E63" />
         </RadioGroup>
 
             />
