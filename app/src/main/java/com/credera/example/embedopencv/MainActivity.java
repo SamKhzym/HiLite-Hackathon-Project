@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout masterLayout;
     private ImageView uploadedImage;
     private int imageMaxHeight;
-    private Button uploadImageButton, convertImageButton, exportCSVBtn;
+    private Button uploadImageButton, convertImageButton, exportCSVBtn, clearAllBtn;
     private TextRecognizer recognizer;
     private EditText emailRecipient;
     SimpleRangeView rangeBar;
@@ -82,7 +82,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         uploadImageButton = (Button) findViewById(R.id.uploadImageButton);
         convertImageButton = (Button) findViewById(R.id.convertPicture);
         exportCSVBtn = (Button) findViewById(R.id.exportCSV);
+        clearAllBtn = (Button) findViewById(R.id.clearAll);
         emailRecipient = (EditText) findViewById(R.id.sendTo);
+
         yellowO = (RadioButton) findViewById((R.id.yellowO));
         blueO = (RadioButton) findViewById((R.id.blueO));
         orangeO = (RadioButton) findViewById((R.id.orangeO));
@@ -93,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         uploadImageButton.setOnClickListener(this);
         convertImageButton.setOnClickListener(this);
         exportCSVBtn.setOnClickListener(this);
+        clearAllBtn.setOnClickListener(this);
 
         recognizer = new TextRecognizer.Builder(MainActivity.this).build();
         hueFilter = Slider();
@@ -115,6 +118,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (!emptySearch) {
                         Log.d("STAGE 3", "STAGE 3");
                         displayAllHighlights();
+                        Log.d("How many text entries?", highlightedTexts.size() + "");
+                        Log.d("How many layouts?", layouts.size() + "");
                     }
                     else {
                         emptySearch = false;
@@ -133,6 +138,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     e.printStackTrace();
                 }
                 break;
+
+            case R.id.clearAll:
+                for (int i = 0; i < layouts.size(); i++) {
+                    masterLayout.removeView(layouts.get(i));
+                }
+                layouts.clear();
+                highlightedTexts.clear();
+                Log.d("How many text entries?", highlightedTexts.size() + "");
+                Log.d("How many layouts?", layouts.size() + "");
         }
     }
 
@@ -146,13 +160,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void findHighlightedTexts() {
-        ArrayList<Bitmap> newTexts = HighlighterProcessing.findHighlightedWords(uploadedImage,colourMaker());// opencv colour filter
+        /*ArrayList<Bitmap> newTexts = HighlighterProcessing.findHighlightedWords(uploadedImage,colourMaker());// opencv colour filter
         if (newTexts.size() == 0) {
             Toast.makeText(getApplicationContext(),"No highlights found. :(", Toast.LENGTH_LONG).show();
             emptySearch = true;
         }
         Collections.reverse(newTexts);
-        highlightedTexts.addAll(newTexts);
+        highlightedTexts.addAll(newTexts);*/
+
+        highlightedTexts = HighlighterProcessing.findHighlightedWords(uploadedImage,colourMaker());
     }
 
     private void getTextFromBitmaps() {
@@ -168,10 +184,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         exportCSVBtn.setVisibility(View.VISIBLE);
         emailRecipient.setVisibility(View.VISIBLE);
+        clearAllBtn.setVisibility(View.VISIBLE);
 
         for (int i = 0; i < layouts.size(); i++) {
             masterLayout.removeView(layouts.get(i));
         }
+        layouts.clear();
 
         for (int i = 0; i < highlightedTexts.size(); i++) {
 
@@ -265,177 +283,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(radBut[5]){return Slider();}
         return new double[]{-1,-1};
     }
-
-
-
-    /*private ImageView imageView;
-    private Bitmap processedBitmap;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        final Context context = this;
-
-        imageView = (ImageView) findViewById(R.id.testImage);
-
-        GlideApp.with(context)
-                .load(R.drawable.test_image)
-                .into(imageView);
-
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        final DebouncingOnClickListener fabClickListener = new DebouncingOnClickListener() {
-            Boolean fabToggle = true;
-
-            @Override
-            public void doClick(View v) {
-                if (!fabToggle) {
-                    fabToggle = true;
-
-                    fab.setImageResource(android.R.drawable.ic_menu_edit);
-
-                    GlideApp.with(context)
-                            .load(R.drawable.test_image)
-                            .into(imageView);
-
-                    return;
-                }
-
-                fabToggle = false;
-                fab.setImageResource(android.R.drawable.ic_menu_gallery);
-
-                new ConvertToGrayAsyncTask(context, imageView).execute();
-            }
-        };
-
-        fab.setOnClickListener(fabClickListener);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-// cock
-    public static Bitmap decodeSampledBitmapFromResource(Resources res,
-                                                         int resId,
-                                                         int reqWidth,
-                                                         int reqHeight) {
-
-        // First decode with inJustDecodeBounds = true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
-
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(res, resId, options);
-    }
-
-    public static int calculateInSampleSize(BitmapFactory.Options options,
-                                            int reqWidth,
-                                            int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) >= reqHeight
-                    && (halfWidth / inSampleSize) >= reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-
-        return inSampleSize;
-    }
-
-    private class ConvertToGrayAsyncTask extends AsyncTask<Void, Void, Bitmap> {
-
-        private WeakReference<Context> contextRef;
-        private WeakReference<ImageView> imageViewRef;
-
-        ConvertToGrayAsyncTask(Context context, ImageView imageView) {
-            contextRef = new WeakReference<>(context);
-            imageViewRef = new WeakReference<>(imageView);
-        }
-
-        @Override
-        protected void onPostExecute(final Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-
-            if (bitmap == null || contextRef.get() == null || imageViewRef.get() == null) {
-                return;
-            }
-
-            Context context = contextRef.get();
-
-            GlideApp.with(context)
-                    .load(bitmap)
-                    .into(imageViewRef.get());
-        }
-
-        @Override
-        protected Bitmap doInBackground(Void... voids) {
-            if (contextRef.get() == null || imageViewRef.get() == null) {
-                return null;
-            }
-
-            Context context = contextRef.get();
-            ImageView imageView = imageViewRef.get();
-
-            if (processedBitmap != null) {
-                processedBitmap.recycle();
-            }
-
-            @SuppressLint("WrongThread") final Bitmap src = decodeSampledBitmapFromResource(context.getResources(),
-                    R.drawable.test_image,
-                    imageView.getWidth(),
-                    imageView.getHeight());
-
-            Mat image = new Mat();
-            Utils.bitmapToMat(src, image);
-
-            src.recycle();
-
-            Mat grayMat = new Mat();
-            Imgproc.cvtColor(image, grayMat, Imgproc.COLOR_BGR2GRAY, CvType.CV_32S);
-
-            processedBitmap = Bitmap.createBitmap(grayMat.cols(),
-                    grayMat.rows(),
-                    Bitmap.Config.ARGB_8888);
-
-            Utils.matToBitmap(grayMat, processedBitmap);
-
-            return processedBitmap;
-        }
-    }*/
 
 }
