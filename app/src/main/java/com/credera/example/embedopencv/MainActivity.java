@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -32,6 +33,7 @@ import org.opencv.objdetect.*;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import butterknife.internal.DebouncingOnClickListener;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     SimpleRangeView rangeBar;
     private RadioButton yellowO,blueO,orangeO,greenO,pinkO,sliderBut;
     boolean[] radBut = new boolean[6];
+    boolean emptySearch = false;
 
     private ArrayList<Bitmap> highlightedTexts = new ArrayList<Bitmap>();
     private ArrayList<String> recognizedText = new ArrayList<String>();
@@ -87,8 +90,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         pinkO = (RadioButton) findViewById((R.id.pinkO));
         sliderBut= (RadioButton) findViewById(R.id.sliderbut);
 
-
-
         uploadImageButton.setOnClickListener(this);
         convertImageButton.setOnClickListener(this);
         exportCSVBtn.setOnClickListener(this);
@@ -107,10 +108,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.convertPicture:
-                findHighlightedTexts();
-                Log.d("button", "press convert");
-                displayAllHighlights();
-
+                Log.d("STAGE 1", "STAGE 1");
+                if (colourMaker()[0] != -1) {
+                    Log.d("STAGE 2", "STAGE 2");
+                    findHighlightedTexts();
+                    if (!emptySearch) {
+                        Log.d("STAGE 3", "STAGE 3");
+                        displayAllHighlights();
+                    }
+                    else {
+                        emptySearch = false;
+                    }
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Please pick a colour to filter", Toast.LENGTH_LONG).show();
+                }
                 break;
 
             case R.id.exportCSV:
@@ -120,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                break;
         }
     }
 
@@ -133,8 +146,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void findHighlightedTexts() {
-        highlightedTexts = HighlighterProcessing.findHighlightedWords(uploadedImage,colourMaker());// opencv colour filter
-
+        ArrayList<Bitmap> newTexts = HighlighterProcessing.findHighlightedWords(uploadedImage,colourMaker());// opencv colour filter
+        if (newTexts.size() == 0) {
+            Toast.makeText(getApplicationContext(),"No highlights found. :(", Toast.LENGTH_LONG).show();
+            emptySearch = true;
+        }
+        Collections.reverse(newTexts);
+        highlightedTexts.addAll(newTexts);
     }
 
     private void getTextFromBitmaps() {
@@ -150,6 +168,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         exportCSVBtn.setVisibility(View.VISIBLE);
         emailRecipient.setVisibility(View.VISIBLE);
+
+        for (int i = 0; i < layouts.size(); i++) {
+            masterLayout.removeView(layouts.get(i));
+        }
 
         for (int i = 0; i < highlightedTexts.size(); i++) {
 
@@ -240,8 +262,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(radBut[2]){return new double[]{50,71}; }
         if(radBut[3]){return new double[]{141,168}; }
         if(radBut[4]){return new double[]{28,40}; }
-        if(radBut[6]){Slider();}
-        return null;
+        if(radBut[5]){return Slider();}
+        return new double[]{-1,-1};
     }
 
 
