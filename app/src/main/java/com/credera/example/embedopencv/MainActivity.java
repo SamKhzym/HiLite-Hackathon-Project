@@ -47,11 +47,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ArrayList<Bitmap> highlightedTexts = new ArrayList<Bitmap>();
     private ArrayList<String> recognizedText = new ArrayList<String>();
+   public static double[] hueFilter;
 
     //andy is bad
 
     static {
-        if (!OpenCVLoader.initDebug()){
+        if (!OpenCVLoader.initDebug()) {
             Log.d("TEST", "Failed to load OpenCV :(");
         } else {
             Log.d("TEST", "Loaded OpenCV :)");
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         convertImageButton.setOnClickListener(this);
 
         recognizer = new TextRecognizer.Builder(MainActivity.this).build();
-
+        hueFilter = Slider();
     }
 
     @Override
@@ -82,12 +83,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.uploadImageButton:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
-                Log.d("button","press upload");
+                Log.d("button", "press upload");
                 break;
 
             case R.id.convertPicture:
                 displayHighlightedTexts();
-                Log.d("button","press convert");
+                Log.d("button", "press convert");
                 setContentView(R.layout.display_highlighted_words);
                 getTextFromBitmaps();
         }
@@ -127,18 +128,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void slider(){
+    private double[] Slider() {
+        final double[] a = {0, 0};
+
         rangeBar = findViewById(R.id.rang_bar);
         rangeBar.setOnChangeRangeListener(new SimpleRangeView.OnChangeRangeListener() {
             @Override
             public void onRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i, int i1) {
-
+                a[0] = i;
             }
         });
         rangeBar.setOnChangeRangeListener(new SimpleRangeView.OnChangeRangeListener() {
             @Override
             public void onRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i, int i1) {
-
+                a[1] = i;
             }
         });
         rangeBar.setOnRangeLabelsListener(new SimpleRangeView.OnRangeLabelsListener() {
@@ -148,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return String.valueOf(i);
             }
         });
+        return a;
     }
 
 

@@ -1,7 +1,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:id="@+id/layout"
@@ -18,18 +19,34 @@
             android:contentDescription="@string/image"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/default_image" />
+
         <Button
             android:id="@+id/uploadImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/upload_a_picture" />
+            android:minWidth="1dp"
+            android:minHeight="1dp"
+            android:text="@string/upload_a_picture"
+            android:textAllCaps="false"
+            android:textIsSelectable="false" />
 
         <me.bendik.simplerangeview.SimpleRangeView
             android:id="@+id/rang_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:max="255"></me.bendik.simplerangeview.SimpleRangeView>
+            android:longClickable="false"
+            android:max="255"
+            android:scrollbarSize="4dp"
+            app:activeFocusThumbColor="#FF0000"
+            app:activeLineColor="@color/colorPrimaryDark"
+            app:activeThumbColor="@color/colorPrimary"
+            app:count="255"
+            app:end="255"
+            app:maxDistance="255"
+            app:minDistance="0"
+            app:tickColor="@color/bg_icon"></me.bendik.simplerangeview.SimpleRangeView>
+
         <Button
             android:id="@+id/convertPicture"
             android:layout_width="wrap_content"

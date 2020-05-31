@@ -94,10 +94,10 @@ public class HighlighterProcessing {
 
         // Step HSV_Threshold0:
         Mat hsvThresholdInput = blur0Output;
-        double[] hsvThresholdHue = {38.84892086330935, 78.63481228668942};
+
         double[] hsvThresholdSaturation = {29.81115107913669, 255.0};
         double[] hsvThresholdValue = {0.0, 255.0};
-        hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
+        hsvThreshold(hsvThresholdInput, MainActivity.hueFilter, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
         // Step Blur1:
         Mat blur1Input = hsvThresholdOutput;
