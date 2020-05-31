@@ -38,14 +38,14 @@
             android:longClickable="false"
             android:max="255"
             android:scrollbarSize="4dp"
-            app:activeFocusThumbColor="#FF0000"
+            app:activeFocusThumbColor="#FFFFFF"
             app:activeLineColor="@color/colorPrimaryDark"
             app:activeThumbColor="@color/colorPrimary"
-            app:count="255"
+            app:count="180"
             app:end="255"
             app:maxDistance="255"
             app:minDistance="0"
-            app:tickColor="@color/bg_icon"></me.bendik.simplerangeview.SimpleRangeView>
+            app:tickColor="#00FFFFFF"></me.bendik.simplerangeview.SimpleRangeView>
 
         <Button
             android:id="@+id/convertPicture"

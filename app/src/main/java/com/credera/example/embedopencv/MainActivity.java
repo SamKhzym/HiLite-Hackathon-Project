@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.convertPicture:
                 displayHighlightedTexts();
                 Log.d("button", "press convert");
-                setContentView(R.layout.display_highlighted_words);
                 getTextFromBitmaps();
         }
     }
