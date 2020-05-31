@@ -76,12 +76,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.uploadImageButton:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+                Log.d("button","press upload");
                 break;
 
             case R.id.convertPicture:
                 displayHighlightedTexts();
+                Log.d("button","press convert");
                 getTextFromBitmaps();
-
         }
     }
 
@@ -93,20 +94,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             uploadedImage.setImageURI(selectedImage);
 
             //FIGURE OUT HOW TO RESIZE IMAGE AND NOT EAT THE BUTTON HERE
-
         }
     }
 
     private void displayHighlightedTexts() {
 
-        highlightedTexts = HighlighterProcessing.findHighlightedWords(uploadedImage);
+        highlightedTexts = HighlighterProcessing.findHighlightedWords(uploadedImage);// opencv colour filter
 
         for (int i = 0; i < highlightedTexts.size(); i++) {
             ImageView newImg = new ImageView(this);
             newImg.setImageBitmap(highlightedTexts.get(i));
             layout.addView(newImg);
-        }
 
+        }
+         //Intent a = new Intent(this,Display_Higlighted_Words.class); // swap screens
+         //startActivity(a);
     }
 
     private void getTextFromBitmaps() {
