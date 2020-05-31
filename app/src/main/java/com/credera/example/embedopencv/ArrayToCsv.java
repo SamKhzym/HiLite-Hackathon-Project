@@ -1,5 +1,6 @@
 package com.credera.example.embedopencv;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -8,15 +9,16 @@ import java.io.*;
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.support.v4.content.ContextCompat.startActivity;
 
 public class ArrayToCsv {
 
     private static final String FILE_NAME = "ExportedCSV.txt";
     private static String masterString = "";
 
-    public static void exportCSV(ArrayList<String> strings, Context ctx) throws IOException {
+    public static Intent exportCSV(String recipient, ArrayList<String> strings) throws IOException {
         String masterString = toCSV(strings);
-        save(masterString, ctx);
+        return send(recipient, masterString);
     }
 
     public static String toCSV(ArrayList<String> array) throws IOException{
@@ -31,28 +33,37 @@ public class ArrayToCsv {
         return masterString;
     }
 
-    public static void save(String str, Context ctx) {
+    public static Intent send(String recipient, String str) {
 
-        FileOutputStream fos = null;
-        try {
-            fos = ctx.openFileOutput(FILE_NAME, MODE_PRIVATE);
-            fos.write(str.getBytes());
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] {recipient});
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Your CSV!");
+        intent.putExtra(Intent.EXTRA_TEXT, str);
 
-            Log.d("TEST", ("Saved to " + ctx.getFilesDir() + "/" + FILE_NAME));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        intent.setType("message/rfc822");
+
+        return intent;
 
     }
+
+//        FileOutputStream fos = null;
+//        try {
+//            fos = ctx.openFileOutput(FILE_NAME, MODE_PRIVATE);
+//            fos.write(str.getBytes());
+//
+//            Log.d("TEST", ("Saved to " + ctx.getFilesDir() + "/" + FILE_NAME));
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (fos != null) {
+//                try {
+//                    fos.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
 
 }

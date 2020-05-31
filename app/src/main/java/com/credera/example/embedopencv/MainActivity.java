@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int imageMaxHeight;
     private Button uploadImageButton, convertImageButton, exportCSVBtn;
     private TextRecognizer recognizer;
+    private EditText emailRecipient;
     SimpleRangeView rangeBar;
     private RadioButton yellowO,blueO,orangeO,greenO,pinkO,sliderBut;
     boolean[] radBut = new boolean[6];
@@ -77,12 +79,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         uploadImageButton = (Button) findViewById(R.id.uploadImageButton);
         convertImageButton = (Button) findViewById(R.id.convertPicture);
         exportCSVBtn = (Button) findViewById(R.id.exportCSV);
+        emailRecipient = (EditText) findViewById(R.id.sendTo);
         yellowO = (RadioButton) findViewById((R.id.yellowO));
         blueO = (RadioButton) findViewById((R.id.blueO));
         orangeO = (RadioButton) findViewById((R.id.orangeO));
         greenO = (RadioButton) findViewById((R.id.greenO));
         pinkO = (RadioButton) findViewById((R.id.pinkO));
         sliderBut= (RadioButton) findViewById(R.id.sliderbut);
+
 
 
         uploadImageButton.setOnClickListener(this);
@@ -145,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void displayAllHighlights() {
 
         exportCSVBtn.setVisibility(View.VISIBLE);
+        emailRecipient.setVisibility(View.VISIBLE);
 
         for (int i = 0; i < highlightedTexts.size(); i++) {
 
@@ -186,7 +191,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void exportCSV() throws IOException {
-        ArrayToCsv.exportCSV(recognizedText, this);
+        Intent sendEmail = ArrayToCsv.exportCSV(emailRecipient.getText().toString(), recognizedText);
+        startActivity(Intent.createChooser(sendEmail, "Choose an email client: "));
     }
 
     private double[] Slider() {
