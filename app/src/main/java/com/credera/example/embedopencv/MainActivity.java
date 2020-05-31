@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import butterknife.internal.DebouncingOnClickListener;
+import com.google.android.gms.vision.text.Text;
+import com.google.android.gms.vision.text.TextBlock;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
