@@ -16,6 +16,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.opencv.android.OpenCVLoader;
 
 import org.opencv.core.*;
@@ -30,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import butterknife.internal.DebouncingOnClickListener;
+import me.bendik.simplerangeview.SimpleRangeView;
 
 import com.google.android.gms.vision.text.Line;
 import com.google.android.gms.vision.text.Text;
@@ -44,15 +47,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView uploadedImage;
     private Button uploadImageButton, convertImageButton;
     private TextRecognizer recognizer;
+    SimpleRangeView rangeBar;
 
     private ArrayList<Bitmap> highlightedTexts = new ArrayList<Bitmap>();
     private ArrayList<String> recognizedText = new ArrayList<String>();
+    public static double[] hueFilter;
     private ArrayList<LinearLayout> layouts = new ArrayList<LinearLayout>();
 
     //andy is bad
 
     static {
-        if (!OpenCVLoader.initDebug()){
+        if (!OpenCVLoader.initDebug()) {
             Log.d("TEST", "Failed to load OpenCV :(");
         } else {
             Log.d("TEST", "Loaded OpenCV :)");
@@ -73,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         convertImageButton.setOnClickListener(this);
 
         recognizer = new TextRecognizer.Builder(MainActivity.this).build();
+        hueFilter = Slider();
     }
 
     @Override
@@ -81,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.uploadImageButton:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
-                Log.d("button","press upload");
+                Log.d("button", "press upload");
                 break;
 
             case R.id.convertPicture:
@@ -156,6 +162,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             masterLayout.addView(newLayout);
 
         }
+    }
+
+    private double[] Slider() {
+        final double[] a = {0, 0};
+
+        rangeBar = findViewById(R.id.rang_bar);
+        rangeBar.setOnChangeRangeListener(new SimpleRangeView.OnChangeRangeListener() {
+            @Override
+            public void onRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i, int i1) {
+                a[0] = i;
+            }
+        });
+        rangeBar.setOnChangeRangeListener(new SimpleRangeView.OnChangeRangeListener() {
+            @Override
+            public void onRangeChanged(@NotNull SimpleRangeView simpleRangeView, int i, int i1) {
+                a[1] = i;
+            }
+        });
+        rangeBar.setOnRangeLabelsListener(new SimpleRangeView.OnRangeLabelsListener() {
+            @Nullable
+            @Override
+            public String getLabelTextForPosition(@NotNull SimpleRangeView simpleRangeView, int i, @NotNull SimpleRangeView.State state) {
+                return String.valueOf(i);
+            }
+        });
+        return a;
     }
 
     /*private ImageView imageView;

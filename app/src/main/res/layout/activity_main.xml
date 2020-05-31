@@ -24,6 +24,21 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/upload_a_picture" />
+
+        <me.bendik.simplerangeview.SimpleRangeView
+            android:id="@+id/rang_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:longClickable="false"
+            android:scrollbarSize="4dp"
+            android:visibility="invisible"
+            app:activeFocusThumbColor="#FFFFFF"
+            app:activeLineColor="#3343AC"
+            app:activeThumbColor="#3F51B5"
+            app:count="180"
+            app:minDistance="0"
+            app:tickColor="#00FFFFFF" />
+
         <Button
             android:id="@+id/convertPicture"
             android:layout_width="wrap_content"
