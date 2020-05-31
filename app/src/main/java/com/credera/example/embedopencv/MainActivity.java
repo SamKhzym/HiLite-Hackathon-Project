@@ -26,6 +26,7 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.*;
 import org.opencv.objdetect.*;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Random;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         uploadImageButton.setOnClickListener(this);
         convertImageButton.setOnClickListener(this);
+        exportCSVBtn.setOnClickListener(this);
 
         recognizer = new TextRecognizer.Builder(MainActivity.this).build();
         hueFilter = Slider();
@@ -92,7 +94,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.convertPicture:
                 findHighlightedTexts();
                 Log.d("button", "press convert");
+                displayAllHighlights();
+                break;
+
+            case R.id.exportCSV:
                 getTextFromBitmaps();
+                try {
+                    exportCSV();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         }
     }
 
@@ -102,8 +113,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri selectedImage = data.getData();
             uploadedImage.setImageURI(selectedImage);
-
-            //FIGURE OUT HOW TO RESIZE IMAGE AND NOT EAT THE BUTTON HERE
         }
     }
 
@@ -122,6 +131,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
     private void displayAllHighlights() {
+
+        exportCSVBtn.setVisibility(View.VISIBLE);
 
         for (int i = 0; i < highlightedTexts.size(); i++) {
 
@@ -162,8 +173,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void exportCSV() {
-
+    private void exportCSV() throws IOException {
+        ArrayToCsv.exportCSV(recognizedText, this);
     }
 
     private double[] Slider() {
