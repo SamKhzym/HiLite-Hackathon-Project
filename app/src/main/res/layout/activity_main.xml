@@ -55,6 +55,12 @@
             android:layout_gravity="center"
             android:text="@string/convert_your_picture" />
 
+        <EditText
+            android:id="@+id/sendTo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Enter Email of recipient"/>
+
         <Button
             android:id="@+id/exportCSV"
             android:layout_width="wrap_content"
