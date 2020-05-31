@@ -54,5 +54,13 @@
             android:layout_gravity="center"
             android:text="@string/convert_your_picture" />
 
+        <Button
+            android:id="@+id/exportCSV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="EXPORT CSV"
+            android:visibility="invisible" />
+
     </LinearLayout>
 </ScrollView>
